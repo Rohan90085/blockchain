@@ -1,0 +1,120 @@
+Limit storage writes
+Use view & pure whenever possible
+Use external instead of public
+Use unchecked (checks overflow)
+Pack variables
+Example:
+❌ Wrong
+Copy code
+
+uint256 a;
+uint8 b;
+uint256 c;
+✔ Correct
+Copy code
+
+uint256 a;
+uint256 c;
+uint8 b;
+Note:
+Smaller types together.
+Sometimes uint256 is better if smaller because EVM costs time for conversion.
+Avoid loops for large arrays
+Use calldata instead of memory for external functions
+Example:
+Copy code
+
+function set(uint[] calldata arr) external { }
+Avoid repeated storage stack
+Example:
+Copy code
+
+uint temp = x;
+return temp + temp + temp;
+Use constants & immutable
+Example:
+Copy code
+
+uint public constant PRICE;
+Because constants are stored in bytecode.
+Used to check condition
+• Refunds remaining gas and reverts the transaction
+Syntax:
+Solidity
+Copy code
+require(condition, "message");
+Used to
+Validate user input
+Check permissions
+Prevent wrong transactions
+Save gas fees
+Example
+Solidity
+Copy code
+function check(uint k) public view returns (string memory) {
+    require(k > 100, "wrong");
+    return "true";
+}
+Note:
+If you give 99, an error will come because the condition k > 100 fails.
+The transaction will revert and the default value will not be returned.
+----------------------------------------------------
+Contract Owner
+Solidity
+Copy code
+contract Owner {
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function withdraw() public {
+        require(msg.sender == owner, "not owner");
+    }
+}
+Note:
+If another person logs in, the operation will not be allowed.
+Assert Error Handler
+• Used to test conditions that should never be false
+If it fails
+Gas is consumed
+Transaction fails
+Indicates serious bug in contract
+No custom message like require
+Used for internal errors
+No gas refund
+Example
+Solidity
+Copy code
+uint public count;
+
+function increase() public {
+    count = 1;
+    assert(count > 0);
+}
+Note:
+If count > 0 is true, the transaction continues.
+-----------------------
+Revert Handler
+(Least used because we can use require)
+Solidity
+Copy code
+function check(uint p) public {
+    if (p < 10) {
+        revert("less than p");
+    }
+}
+Use:
+Solidity
+Copy code
+revert("OK");
+Modifiers
+Modifiers are used to change the behavior of a function.
+Uses
+Access control (prevent unauthorized access)
+Validation
+Reusability of code
+Improve contract security
+How it works
+Saves gas fees because if the condition fails, the transaction is cancelled.
