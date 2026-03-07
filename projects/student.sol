@@ -1,3 +1,6 @@
+
+
+//student marks record using mapping,structure,enum which can perform the add,view,delete of student
 //SPDX-License-Identifier:MIT
 pragma solidity ^0.8.0;
  enum status{pending,pass,fail}
