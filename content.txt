@@ -117,4 +117,8 @@ Validation
 Reusability of code
 Improve contract security
 How it works
+
 Saves gas fees because if the condition fails, the transaction is cancelled.
+
+
+interfaces :we are writing predefined function in class if we inherit that then we must implemente according to that
