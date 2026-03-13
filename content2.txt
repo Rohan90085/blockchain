@@ -117,3 +117,62 @@ Public → Everywhere
 Private → Same contract only
 Internal → Contract + Inheritance
 External → Outside only
+---------------------------------------------------------------------
+An interface in Solidity is used to define the structure of functions that other contracts must implement.
+Points
+Contains only function declarations (signatures).
+No function implementation (body).
+Used to interact with other smart contracts.
+Similar to interface in Java.
+Helps in standardizing communication between contracts.
+Rules of Solidity Interface
+Functions must be external.
+No function body (only declaration).
+Cannot declare state variables.
+Cannot have constructors.
+Interfaces cannot inherit normal contracts (only other interfaces).
+All functions must be implemented in the contract that uses the interface.
+Example
+Solidity
+Copy code
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+interface Student {
+
+    function create(uint id, string memory name) external;
+
+    function remove(uint id) external;
+
+}
+
+contract student is Student {
+
+    mapping(uint => string) public list;
+
+    function create(uint id, string memory name) external override {
+        list[id] = name;
+    }
+
+    function remove(uint id) external override {
+        delete list[id];
+    }
+}
+Explanation
+Interface Student
+Defines two functions:
+create() → add student
+remove() → delete student
+Contract student
+Implements the interface
+Uses mapping to store student data
+Uses override keyword because it implements interface functions
+Extra Points (Important for Exams)
+Interfaces are mainly used for cross-contract communication.
+Used heavily in DeFi and ERC standards.
+Example:
+ERC‑20 Token Standard
+ERC‑721 NFT Standard
+These standards are defined using interfaces.
+✅ Short Definition (for exam)
+An interface in Solidity is a contract-like structure that contains only function declarations without implementation and is used to interact with other smart contracts.
