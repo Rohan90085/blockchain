@@ -1,0 +1,119 @@
+Definition:
+A public function or variable can be accessed from anywhere (inside the contract, derived contracts, and outside contracts).
+Extra Points:
+Default visibility for state variables is public.
+Public variables automatically create a getter function.
+Can be called internally and externally.
+Most commonly used for functions that need to be accessed by users.
+Example:
+Solidity
+Copy code
+pragma solidity ^0.8.0;
+
+contract Test {
+    uint public num = 10;
+
+    function getNum() public view returns(uint) {
+        return num;
+    }
+}
+Key Points
+Accessible everywhere
+Auto getter for variables
+Can be inherited
+2. Private
+Definition:
+A private variable or function can only be accessed inside the same contract.
+Extra Points:
+Not accessible in derived (child) contracts.
+Used for sensitive internal logic.
+Even though private, data is still visible on the blockchain (not truly secret).
+Example:
+Solidity
+Copy code
+pragma solidity ^0.8.0;
+
+contract Test {
+    uint private num = 5;
+
+    function getNum() public view returns(uint){
+        return num;
+    }
+}
+Key Points
+Only inside the contract
+Not inherited
+Used for internal logic
+3. Internal
+Definition:
+An internal function or variable can be accessed inside the contract and in derived (child) contracts.
+Extra Points:
+Similar to protected in other languages.
+Useful when building inheritance-based smart contracts.
+Cannot be accessed from outside contracts directly.
+Example:
+Solidity
+Copy code
+pragma solidity ^0.8.0;
+
+contract Parent {
+    uint internal num = 20;
+}
+
+contract Child is Parent {
+    function getNum() public view returns(uint){
+        return num;
+    }
+}
+Key Points
+Inside contract
+Derived contracts
+Used in inheritance
+4. External
+Definition:
+An external function can only be called from outside the contract.
+Extra Points:
+Cannot be called directly inside the contract.
+Can be called internally using this.functionName().
+Gas efficient when receiving large arrays.
+Example:
+Solidity
+Copy code
+pragma solidity ^0.8.0;
+
+contract Test {
+
+    function show() external pure returns(string memory){
+        return "Hello";
+    }
+}
+Key Points
+Only outside contract
+Cannot call internally directly
+Gas efficient
+Visibility Comparison Table
+Visibility
+Same Contract
+Derived Contract
+Outside Contract
+Public
+✅ Yes
+✅ Yes
+✅ Yes
+Private
+✅ Yes
+❌ No
+❌ No
+Internal
+✅ Yes
+✅ Yes
+❌ No
+External
+❌ No (direct)
+❌ No
+✅ Yes
+✅ Simple Memory Trick
+Public → Everywhere
+Private → Same contract only
+Internal → Contract + Inheritance
+External → Outside only
