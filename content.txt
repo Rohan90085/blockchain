@@ -122,3 +122,112 @@ Saves gas fees because if the condition fails, the transaction is cancelled.
 
 
 interfaces :we are writing predefined function in class if we inherit that then we must implemente according to that
+delegatecall is used to execute another contract’s code but keep the current contract’s storage, address, and balance.
+👉 Simple idea:
+Copy code
+
+Contract A uses code of Contract B
+but
+Storage remains in Contract A
+2️⃣ Syntax
+Solidity
+Copy code
+(bool success, bytes memory data) =
+    contractAddress.delegatecall(data);
+Usually written like:
+Solidity
+Copy code
+(bool success, ) =
+    contractAddress.delegatecall(
+        abi.encodeWithSignature("set(uint256)",10)
+    );
+3️⃣ Example
+Solidity
+Copy code
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract A {
+    uint public num;
+
+    function set(uint _num) public {
+        num = _num;
+    }
+}
+
+contract B {
+    uint public num;
+
+    function setNum(address _contract, uint _num) public {
+        (bool success, ) = _contract.delegatecall(
+            abi.encodeWithSignature("set(uint256)", _num)
+        );
+        require(success);
+    }
+}
+4️⃣ What Happens Here?
+Copy code
+
+Contract B calls Contract A
+        ↓
+A's code runs
+        ↓
+BUT storage changes in Contract B
+Example:
+Copy code
+
+B.setNum(A,10)
+Result:
+Copy code
+
+B.num = 10
+Not:
+Copy code
+
+A.num
+5️⃣ call() vs delegatecall()
+Feature
+call()
+delegatecall()
+Executes code of
+Target contract
+Target contract
+Storage used
+Target contract
+Calling contract
+msg.sender
+Changes
+Original sender
+Used in
+Normal calls
+Proxy contracts
+6️⃣ Real Use Case
+delegatecall is mainly used in:
+Upgradeable Smart Contracts
+Proxy Contracts
+Libraries
+Example architecture:
+Copy code
+
+User
+ ↓
+Proxy Contract
+ ↓ (delegatecall)
+Logic Contract
+Storage remains in proxy, logic can be updated.
+7️⃣ Important Interview Question
+❓ Why is delegatecall used in proxy contracts?
+Answer:
+It allows executing logic from another contract while keeping storage in the proxy contract, enabling smart contract upgrades.
+8️⃣ Simple Example Flow
+Copy code
+
+User calls Contract B
+       ↓
+B uses delegatecall
+       ↓
+A's code executes
+       ↓
+B's storage changes
+✅ Short definition (exam/interview)
+delegatecall executes another contract’s code but uses the storage, address, and balance of the calling contract.
