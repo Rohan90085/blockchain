@@ -15,7 +15,7 @@ contract Val{
     //     require(adr!=address(0),"no addresss");
     //     _;
     // }
-    function changeowner(address _new)public onlyOwner {//validate(_new)
+    function changeOwner(address _new)public onlyOwner {//validate(_new)
         owner=_new;
     }
 }
