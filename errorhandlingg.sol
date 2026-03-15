@@ -1,4 +1,45 @@
-try and catch in Solidity are used for error handling when calling external contracts.
+//SPDX-License-Identifier:MIT
+
+
+// create one a.sol file ://SPDX-License-Identifier:MIT
+// pragma solidity ^0.8.0;
+// contract A{
+//     uint public k;
+//     function validate(uint x)public returns(uint){
+//         require(x!=0,"other than zero");
+//         return x;
+//     }
+// }
+//------------------------------------------------------------------------------*/
+
+pragma solidity ^0.8.0;
+
+
+import "./a.sol";
+
+contract B{
+    event llog(string);
+
+    A obj = new A();
+
+    function val(uint a) public returns(string memory){
+
+        try obj.validate(a) returns (uint){
+            emit llog("ok");
+            return "Approved";
+        }
+
+        catch{
+            emit llog("not approved zero");
+
+            return "Error";
+        }
+
+    }
+
+}
+//-------------------------------------------------------------------------------------------------------------------
+/*try and catch in Solidity are used for error handling when calling external contracts.
 If the external function fails (reverts), the catch block executes instead of crashing the whole transaction.
 
 I’ll explain it step-by-step.
@@ -143,4 +184,4 @@ Lending protocol
 
 Oracle
 
-If one fails, try-catch prevents entire protocol failure
+If one fails, try-catch prevents entire protocol failure*/
