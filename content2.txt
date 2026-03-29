@@ -176,3 +176,9 @@ ERC‑721 NFT Standard
 These standards are defined using interfaces.
 ✅ Short Definition (for exam)
 An interface in Solidity is a contract-like structure that contains only function declarations without implementation and is used to interact with other smart contracts.
+mapping(uint256 => User) public users;          // Find details by ID
+mapping(address => uint256) public addressToId; // Find the ID by Address
+
+function getMyId() public view returns (uint256) {
+    return addressToId[msg.sender];
+}
