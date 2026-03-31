@@ -292,4 +292,4 @@ Used by frontend apps (like using MetaMask or web3 apps)
 Can have indexed parameters
 🔹 Short Definition (2–5 Marks)
 
-"An event in Solidity is a logging mechanism used to store data on the blockchain, which can be accessed by external applications to track contract activity."
+"An event in Solidity is a logging mechanism used to store data on the blockchain, which can be accessed by external applications to track contract activity."   
