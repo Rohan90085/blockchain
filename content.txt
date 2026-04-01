@@ -293,3 +293,66 @@ Can have indexed parameters
 🔹 Short Definition (2–5 Marks)
 
 "An event in Solidity is a logging mechanism used to store data on the blockchain, which can be accessed by external applications to track contract activity."   
+-----------------------------------------------------------------------------------------------
+keccak:
+keccak solidity
+
+Here’s a clear explanation of Keccak in Solidity (very important for blockchain exams + coding) 👇
+
+✅ What is Keccak?
+
+In Solidity, Keccak-256 is a hash function used to convert data into a fixed-size value.
+
+👉 Function used:
+
+keccak256()
+
+It returns a 32-byte hash (bytes32).
+
+✅ Why it is used?
+Data security 🔐
+Unique identification (IDs)
+Password hashing
+Mapping keys
+Digital signatures
+✅ Simple Example
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract HashExample {
+
+    function getHash(string memory name) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(name));
+    }
+}
+✅ Explanation
+abi.encodePacked(name) → converts data into bytes
+keccak256() → generates hash
+
+👉 Example:
+
+Input: "Rohan"
+Output: 0x6f8c... (fixed hash)
+✅ Important Points ⭐
+Same input → Same hash
+Small change → Completely different hash
+One-way (cannot reverse)
+Used in Ethereum internally
+✅ Example 2 (Compare Two Strings)
+function compare(string memory a, string memory b) public pure returns (bool) {
+    return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
+}
+
+👉 Used because Solidity cannot directly compare strings easily.
+
+🎯 Real-Life Use
+Password verification
+Generating unique IDs
+Lottery / randomness (basic level)
+💡 Exam Tip
+
+👉 Write this line:
+
+keccak256(abi.encodePacked(data))
+
+This is the most important syntax
